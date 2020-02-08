@@ -1,18 +1,14 @@
 import React from "react"
-import app from "../lib/db"
+import firebase from "../lib/db"
 
-app
-  .firestore()
-  .collection("messages")
-  .doc("85GiXutq32LGffMsPvRI")
-  .get()
-
-const Home = () => (
+const Home = ({ messages }) => (
   <div>
     <div className="hero">
       <h1 className="title">Welcome to Next.js!</h1>
       <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
+        {messages.map((message) => (
+          <p key={message.id}>{message.uppercase}</p>
+        ))}
       </p>
 
       <div className="row">
@@ -82,5 +78,34 @@ const Home = () => (
     `}</style>
   </div>
 )
+
+Home.getInitialProps = async ({ pathname, req, res }) => {
+  if (process.browser) {
+    return __NEXT_DATA__.props.pageProps
+  }
+  let pageProps = {}
+  let messages = []
+  try {
+    let message = await firebase
+      .firestore()
+      .collection("messages")
+      .get()
+      .then((documentSet) => {
+        documentSet.forEach((doc) => {
+          messages.push({
+            id: doc.id,
+            ...doc.data(),
+          })
+        })
+        pageProps = {
+          ...pageProps,
+          messages,
+        }
+      })
+  } catch (err) {
+    console.log(err)
+  }
+  return pageProps
+}
 
 export default Home
