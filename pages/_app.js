@@ -17,11 +17,11 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props
 
     return (
-      <Container>
+      <React.Fragment>
         <Page>
           <Component {...pageProps} />
         </Page>
-      </Container>
+      </React.Fragment>
     )
   }
 }

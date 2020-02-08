@@ -1,6 +1,12 @@
 import React from "react"
 import firebase from "../lib/db"
 
+firebase
+  .firestore()
+  .collection("messages")
+  .doc("85GiXutq32LGffMsPvRI")
+  .get()
+
 const Home = () => (
   <div>
     <div className="hero">
