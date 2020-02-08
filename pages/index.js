@@ -1,4 +1,5 @@
 import React from "react"
+import firebase from "../lib/db"
 
 const Home = () => (
   <div>
