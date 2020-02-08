@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import firebase from "../lib/db"
+import { TenantContext } from "../components/Page"
 
 const Home = ({ initialMessages }) => {
+  const { tagline } = useContext(TenantContext)
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const Home = ({ initialMessages }) => {
   return (
     <div>
       <div className="hero">
-        <h1 className="title">Welcome to Next.js!</h1>
+        <h1 className="title">{tagline}</h1>
         <p className="description">
           {messages.map((message) => (
             <p key={message.id}>{message.uppercase}</p>

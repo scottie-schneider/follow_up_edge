@@ -1,12 +1,12 @@
 import React from "react"
 import NextDocument from "next/document"
 import { ServerStyleSheet } from "styled-components"
+import firebase from "../lib/db"
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
-
     try {
       ctx.renderPage = () =>
         originalRenderPage({

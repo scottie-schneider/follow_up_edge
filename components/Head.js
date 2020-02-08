@@ -1,14 +1,20 @@
 import Head from "next/head"
+import { useContext } from "react"
+import { TenantContext } from "./Page"
 
-export default () => (
-  <Head>
-    <title>Follow Up Edge</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta charSet="utf-8" />
-    <meta name="description" content={"test"} />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-  </Head>
-)
+export default () => {
+  const { tagline } = useContext(TenantContext)
+  console.log(tagline)
+  return (
+    <Head>
+      <title>{tagline}</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <meta charSet="utf-8" />
+      <meta name="description" content={"test"} />
+      <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+      />
+    </Head>
+  )
+}

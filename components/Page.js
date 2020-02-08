@@ -1,26 +1,11 @@
-import React, { Component } from "react"
+import React, { createContext } from "react"
 import Head from "./Head"
 import Nav from "./Nav"
 import Footer from "./Footer"
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
-const theme = {
-  red: "#FF0000",
-  black: "#393939",
-  grey: "#3A3A3A",
-  lightgrey: "#E1E1E1",
-  offWhite: "#EDEDED",
-  maxWidth: "1000px",
-  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
-}
-
-const StyledPage = styled.div`
-  background: white;
-  color: ${(props) => props.theme.black};
-  display: grid;
-  min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
-`
+const TenantContext = createContext(null)
+export { TenantContext }
 
 const Inner = styled.div`
   max-width: ${(props) => props.theme.maxWidth};
@@ -48,20 +33,43 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-class Page extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
+const Page = ({ tenantObject, children }) => {
+  const theme = {
+    red: tenantObject.color,
+    image: tenantObject.imageURL,
+    grey: "#3A3A3A",
+    lightgrey: "#E1E1E1",
+    offWhite: "#EDEDED",
+    maxWidth: "1000px",
+    bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
+  }
+
+  const StyledPage = styled.div`
+    /* background: ${(props) => props.theme.red}; */
+    background: white;
+    color: ${(props) => props.theme.black};
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+  `
+  return (
+    <ThemeProvider theme={theme}>
+      <TenantContext.Provider value={tenantObject}>
         <StyledPage>
           <GlobalStyles />
           <Head />
+          {console.log(theme)}
           <Nav />
-          <Inner className="content">{this.props.children}</Inner>
+          <Inner className="content">{children}</Inner>
           <Footer className="footer" />
         </StyledPage>
-      </ThemeProvider>
-    )
-  }
+      </TenantContext.Provider>
+    </ThemeProvider>
+  )
+}
+
+Page.getInitialProps = async ({ pathname, req, res }) => {
+  let pageProps = {}
 }
 
 export default Page
