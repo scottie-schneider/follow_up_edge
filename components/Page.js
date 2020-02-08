@@ -16,7 +16,6 @@ const theme = {
 
 const StyledPage = styled.div`
   background: white;
-  border: 1px solid red;
   color: ${(props) => props.theme.black};
   display: grid;
   min-height: 100vh;
