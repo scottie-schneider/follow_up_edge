@@ -1,7 +1,7 @@
 import React from "react"
-import firebase from "../lib/db"
+import app from "../lib/db"
 
-firebase
+app
   .firestore()
   .collection("messages")
   .doc("85GiXutq32LGffMsPvRI")
