@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useContext } from "react"
 import firebase from "../lib/db"
-import { TenantContext } from "../components/Page"
+import { TenantContext } from "./_app"
+import styled from "styled-components"
 
+const StyledImage = styled.img`
+  width: 200px;
+  height: 200px;
+`
 const Home = ({ initialMessages }) => {
-  const { tagline } = useContext(TenantContext)
+  const { tagline, imageURL } = useContext(TenantContext)
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
@@ -38,7 +43,7 @@ const Home = ({ initialMessages }) => {
             <p key={message.id}>{message.uppercase}</p>
           ))}
         </p>
-
+        <StyledImage src={imageURL} />
         <div className="row">
           <a href="https://nextjs.org/docs" className="card">
             <h3>Documentation &rarr;</h3>

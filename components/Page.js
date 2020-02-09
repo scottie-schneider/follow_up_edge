@@ -1,11 +1,8 @@
-import React, { createContext } from "react"
+import React from "react"
 import Head from "./Head"
 import Nav from "./Nav"
 import Footer from "./Footer"
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
-
-const TenantContext = createContext(null)
-export { TenantContext }
 
 const Inner = styled.div`
   max-width: ${(props) => props.theme.maxWidth};
@@ -33,10 +30,10 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-const Page = ({ tenantObject, children }) => {
+const Page = ({ children }) => {
   const theme = {
-    red: tenantObject.color,
-    image: tenantObject.imageURL,
+    red: "#000",
+    image: null,
     grey: "#3A3A3A",
     lightgrey: "#E1E1E1",
     offWhite: "#EDEDED",
@@ -54,16 +51,13 @@ const Page = ({ tenantObject, children }) => {
   `
   return (
     <ThemeProvider theme={theme}>
-      <TenantContext.Provider value={tenantObject}>
-        <StyledPage>
-          <GlobalStyles />
-          <Head />
-          {console.log(theme)}
-          <Nav />
-          <Inner className="content">{children}</Inner>
-          <Footer className="footer" />
-        </StyledPage>
-      </TenantContext.Provider>
+      <StyledPage>
+        <GlobalStyles />
+        <Head />
+        <Nav />
+        <Inner className="content">{children}</Inner>
+        <Footer className="footer" />
+      </StyledPage>
     </ThemeProvider>
   )
 }
